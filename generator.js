@@ -1,11 +1,11 @@
 const puzzleNumber = Math.floor(((new Date()).getTime() - (new Date('08/07/2023')).getTime()) / (1000 * 3600 * 24));
 console.log(puzzleNumber);
 
-const arng = new alea('digits' + puzzleNumber);
+const arng = new alea('SixNums' + puzzleNumber);
 
 const operators = ['*', '/', '+', '-'];
 
-const opmap = {
+const opMap = {
     '*': (n1, n2) => n1 * n2,
     '/': (n1, n2) => n1 / n2,
     '+': (n1, n2) => n1 + n2,
@@ -19,7 +19,8 @@ const randomInteger = (min, max) => {
 const chooseNumFromList = set => {
     const chosenIndex = randomInteger(0, set.length - 1);
     const chosenNum = set[chosenIndex];
-    const remainingSet = set.toSpliced(chosenIndex, 1);
+    const remainingSet = Array.from(set);
+    remainingSet.splice(chosenIndex, 1);
     return [chosenNum, remainingSet];
 };
 
@@ -39,10 +40,10 @@ const generateValidSet = (min, max) => {
         const [total, _] = ops.reduce((acc, op) => {
             const [currTotal, currSet] = acc;
             const [nextNum, nextSet] = chooseNumFromList(currSet);
-            let nextTotal = opmap[op](currTotal, nextNum);
+            let nextTotal = opMap[op](currTotal, nextNum);
             if (!Number.isInteger(nextTotal)) {
                 const replaceOp = operators[randomInteger(1, 3)];
-                nextTotal = opmap[replaceOp](currTotal, nextNum);
+                nextTotal = opMap[replaceOp](currTotal, nextNum);
             }
             return [nextTotal, nextSet];
         }, chooseNumFromList(set));
