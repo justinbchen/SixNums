@@ -1,4 +1,7 @@
-const arng = new alea('digits' + 1);
+const puzzleNumber = Math.floor(((new Date()).getTime() - (new Date('08/07/2023')).getTime()) / (1000 * 3600 * 24));
+console.log(puzzleNumber);
+
+const arng = new alea('digits' + puzzleNumber);
 
 const operators = ['*', '/', '+', '-'];
 
@@ -10,7 +13,7 @@ const opmap = {
 };
 
 const randomInteger = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(arng() * (max - min + 1)) + min;
 };
 
 const chooseNumFromList = set => {
@@ -50,7 +53,7 @@ const generateValidSet = (min, max) => {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     console.log(generateValidSet(1, 99));
     console.log(generateValidSet(100, 199));
     console.log(generateValidSet(200, 299));
